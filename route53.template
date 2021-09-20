@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Cloudifferent Route53 setup for two hosted zones.",
+  "Description": "Cloudifferent Route53, setup for two hosted zones.",
   "Resources": {
     "BlogDNSHostedZone" : {
       "Type" : "AWS::Route53::HostedZone",
