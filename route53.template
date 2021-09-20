@@ -1,0 +1,37 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Cloudifferent Route53 setup for two hosted zones.",
+  "Resources": {
+    "BlogDNSHostedZone" : {
+      "Type" : "AWS::Route53::HostedZone",
+      "Properties" :
+      {
+        "HostedZoneConfig" : {
+          "Comment": "Cloudifferent BLOG DNS Name"
+        },
+        "Name" : "blog.cloudifferent.com"
+      }
+    },
+    "WebDNSHostedZone" : {
+      "Type" : "AWS::Route53::HostedZone",
+      "Properties" :
+      {
+        "HostedZoneConfig" : {
+          "Comment": "Cloudifferent WWW DNS Name"
+        },
+        "Name" : "www.cloudifferent.com"
+      }
+    }
+
+  },
+  "Outputs": {
+    "OutDNSHostedZoneBlog" : {
+      "Description": "DNS Blog Zone",
+      "Value": { "Ref":  "BlogDNSHostedZone"}
+    },
+    "OutDNSHostedZoneWeb" : {
+      "Description": "DNS WWW Zone",
+      "Value": { "Ref":  "WebDNSHostedZone"}
+    }
+  }
+}
