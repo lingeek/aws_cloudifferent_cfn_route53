@@ -1,37 +1,51 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "Cloudifferent Route53, setup for two hosted zones.",
-  "Resources": {
-    "BlogDNSHostedZone" : {
-      "Type" : "AWS::Route53::HostedZone",
-      "Properties" :
-      {
-        "HostedZoneConfig" : {
-          "Comment": "Cloudifferent BLOG DNS Name"
-        },
-        "Name" : "blog.cloudifferent.com"
-      }
+  "Parameters": {
+    "TAGProject": {
+      "Description": "Business TAG - Project name",
+      "Type": "String",
+      "Default": "project-cloudifferent"
     },
-    "WebDNSHostedZone" : {
-      "Type" : "AWS::Route53::HostedZone",
-      "Properties" :
-      {
-        "HostedZoneConfig" : {
-          "Comment": "Cloudifferent WWW DNS Name"
+    "TAGEnvironment": {
+      "Description": "This is the Cloudifferent environment.",
+      "Type": "String",
+      "AllowedValues": [
+        "production",
+        "test",
+        "stage"
+      ],
+      "Default": "production"
+    }
+  },
+  "Resources": {
+    "NSDNSHostedZone": {
+      "Type": "AWS::Route53::HostedZone",
+      "Properties": {
+        "HostedZoneConfig": {
+          "Comment": "Cloudifferent DNS Name"
         },
-        "Name" : "www.cloudifferent.com"
+        "Name": "cloudifferent.com"
       }
     }
 
   },
   "Outputs": {
-    "OutDNSHostedZoneBlog" : {
-      "Description": "DNS Blog Zone",
-      "Value": { "Ref":  "BlogDNSHostedZone"}
-    },
-    "OutDNSHostedZoneWeb" : {
-      "Description": "DNS WWW Zone",
-      "Value": { "Ref":  "WebDNSHostedZone"}
+    "OutDNSHostedZone": {
+      "Description": "DNS Cloudifferent Zone",
+      "Value": {
+        "Ref": "NSDNSHostedZone"
+      },
+      "Export": {
+        "Name": {
+          "Fn::Sub": "Export::${TAGEnvironment}-NSZoneID"
+        }
+      }
     }
+
   }
 }
+
+
+
+
